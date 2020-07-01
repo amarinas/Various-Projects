@@ -33,9 +33,10 @@ h1 {
 
 }
 
-textarea {
-  font-family: 'Press Start 2P', cursive;
-  border: 3px solid black;
+input, textarea {
+  font-size: 20px;
+  font-family:"Helvetica Neue", Helvetica, sans-serif;
+  border: 10px solid black;
   width: 90%;
   margin: 0 auto;
   outline: none;
