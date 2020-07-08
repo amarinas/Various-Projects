@@ -1,9 +1,12 @@
-import React, {useState}from 'react';
+import React, {useState, useEffect}from 'react';
 
 import './App.css';
 
 function App() {
   const [text, setText] = useState("")
+  const [timeRemaining, setTimeRemaining] = useState(5)
+  const [isTimeRunning, setIsTimeRunning] = useState(false)
+  const [wordCount, setWordcount] = useState(0)
 
 
   function handleChange(e){
@@ -17,7 +20,28 @@ function App() {
 
   }
 
+  function startClock(){
+    setIsTimeRunning(true)
+    setTimeRemaining(5)
+    setText("")
+  }
 
+  function endGame() {
+    const numWords = calculateWordCount(text)
+    //console.log(numWords)
+    setWordcount(numWords)
+  }
+
+  useEffect(()=> {
+    if(isTimeRunning && timeRemaining > 0){
+      setTimeout(() => {
+        setTimeRemaining(time => time-1 )
+      }, 1000)
+    }else if(timeRemaining === 0){
+      setIsTimeRunning(false)
+      endGame()
+    }
+  }, [timeRemaining, isTimeRunning])
 
 
 
@@ -27,10 +51,11 @@ function App() {
         <textarea
             onChange={handleChange}
             value={text}
+
         />
-        <h4>Time Remaining</h4>
-        <button onClick={() => console.log(calculateWordCount(text))}>Start Game</button>
-        <h1>Word Count Per minute</h1>
+        <h4>Time Remaining: {timeRemaining}</h4>
+        <button onClick={startClock}>Start Game</button>
+        <h1>Word Count: {wordCount}</h1>
     </div>
   );
 }
